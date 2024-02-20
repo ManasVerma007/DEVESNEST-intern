@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+  <title>Homepage</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    .bullet-list {
+      list-style-type: disc;
+      list-style-position: inside;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-5">Amazon Product Search</h1>
+        <form id="searchForm" class="form-inline justify-content-center my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" id="searchQuery" placeholder="Enter search query">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <div id="loading" style="display: none;">Loading...</div>
+        <table id="resultsTable" class="table table-striped" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                    <th>Reviews</th>
+                    <th>URL</th>
+                    <th>Customer Reviews</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#searchForm').on('submit', function(e) {
+                e.preventDefault();
+                $('#loading').show();
+                $('#resultsTable').hide();
+                const searchQuery = $('#searchQuery').val();
+                const loadingMessages = ['Loading...', 'Still loading...', 'Almost there...'];
+                let currentMessageIndex = 0;
+                const loadingInterval = setInterval(() => {
+                    $('#loading').text(loadingMessages[currentMessageIndex]);
+                    currentMessageIndex = (currentMessageIndex + 1) % loadingMessages.length;
+                }, 2000); // Change the text every 2 seconds
+                $.ajax({
+                    url: `/search/${searchQuery}`,
+                    type: 'GET',
+                    success: function(data) {
+                        clearInterval(loadingInterval); // Stop changing the text
+                        $('#loading').hide();
+                        $('#resultsBody').empty();
+                        data.forEach(product => {
+                            let reviewsList = product.Custreviews.map(review => `<li>${review}</li>`).join('');
+                            $('#resultsBody').append(`
+                                <tr>
+                                    <td>${product.productName}</td>
+                                    <td>${product.price}</td>
+                                    <td>${product.rating}</td>
+                                    <td>${product.reviews}</td>
+                                    <td><a href="${product.url}" target="_blank">Link</a></td>
+                                    <td><ul class="bullet-list">${reviewsList}</ul></td>
+                                </tr>
+                            `);
+                        });
+                        $('#resultsTable').show();
+                    },
+                    error: function(error) {
+                        clearInterval(loadingInterval); // Stop changing the text
+                        $('#loading').hide();
+                        alert('Error: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+
+  <%- include('./partials/scripts') %>
+</body>
+</html>
