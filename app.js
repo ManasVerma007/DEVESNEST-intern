@@ -18,7 +18,7 @@ app.get("/search/:search_query", async (req, res) => {
     const searchPhrase = req.params.search_query;
 
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
