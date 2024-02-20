@@ -19,8 +19,16 @@ app.get("/search/:search_query", async (req, res) => {
 
     const browser = await puppeteer.launch({
       headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+      args: ["--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",],
+
+      executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+  });
 
     const page = await browser.newPage();
 
@@ -114,7 +122,6 @@ app.get("/search/:search_query", async (req, res) => {
 
       for (let i = 0; i < 4; i++) {
         const productPage = await browser.newPage();
-        console.log(cardData[i].url);
         await productPage.goto(cardData[i].url);
         await new Promise((resolve) => setTimeout(resolve, 3000));
         console.log(`Scraping product ${i + 1}...`);
