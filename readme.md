@@ -35,6 +35,11 @@ To search for a product, use the `/search/:search_query` endpoint, replacing `:s
 
 You can test the API using tools like Postman or Thunder Client. Simply send a GET request to the `/search/:search_query` endpoint.
 
+### Video
+https://github.com/ManasVerma007/DEVESNEST-intern/assets/99191853/157d5ae3-50f4-48b2-ba2c-d4783abece69
+
+
+
 ## Important Note
 
 Upon continuous testing, it has been found that the API requires a good and stable internet connection to function optimally. Please ensure you have a stable connection while using the API.
