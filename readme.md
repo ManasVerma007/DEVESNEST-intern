@@ -33,6 +33,12 @@ To start using the application, navigate to `http://localhost:3000/` in your bro
 
 To search for a product, use the `/search/:search_query` endpoint, replacing `:search_query` with your search term.
 
+You can test the API using tools like Postman or Thunder Client. Simply send a GET request to the `/search/:search_query` endpoint.
+
+## Important Note
+
+Upon continuous testing, it has been found that the API requires a good and stable internet connection to function optimally. Please ensure you have a stable connection while using the API.
+
 ## Built With
 
 - [Node.js](https://nodejs.org/)

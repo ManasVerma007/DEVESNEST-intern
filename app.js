@@ -37,7 +37,7 @@ app.get("/search/:search_query", async (req, res) => {
     );
 
     const homeUrl = "https://www.amazon.in/";
-    await page.goto(homeUrl);
+    await page.goto(homeUrl, {timeout:60000});
 
     await page.waitForSelector("#twotabsearchtextbox");
     await page.type("#twotabsearchtextbox", searchPhrase, { delay: 100 });
@@ -54,7 +54,7 @@ app.get("/search/:search_query", async (req, res) => {
 
     async function scrapePage(url) {
       console.log("Scraping page...");
-      await page.goto(url);
+      await page.goto(url, {timeout:60000});
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
       await page.waitForSelector(".s-widget-container");
