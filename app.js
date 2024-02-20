@@ -122,7 +122,7 @@ app.get("/search/:search_query", async (req, res) => {
 
       for (let i = 0; i < 4; i++) {
         const productPage = await browser.newPage();
-        await productPage.goto(cardData[i].url);
+        await productPage.goto(cardData[i].url, {timeout:60000});
         await new Promise((resolve) => setTimeout(resolve, 3000));
         console.log(`Scraping product ${i + 1}...`);
 
