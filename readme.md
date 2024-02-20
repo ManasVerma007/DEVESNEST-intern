@@ -29,6 +29,10 @@ A step by step series of examples that tell you how to get a development environ
 
 ## Usage
 
+#### Live Link
+https://scrappys-ghost.onrender.com
+
+#### Setup Locally
 To start using the application, navigate to `http://localhost:3000/` in your browser.
 
 To search for a product, use the `/search/:search_query` endpoint, replacing `:search_query` with your search term.
